@@ -11,10 +11,6 @@
 #include <stdlib.h>
 #include "cities.hh"
 
-void Cities::add_to_city_list_(Cities::coord_t c) {
-  city_list_.push_back(c);
-}
-
 Cities Cities::reorder(const Cities::permutation_t& ordering) const {
   Cities retval;
   // decided to allow including a city twice, as well as not including all
@@ -32,11 +28,11 @@ double Cities::own_path_distance() {
   double retval = 0;
   uint i;
   for (i = 0; i < city_list_.size()-1; i++) {
-    retval += sqrt(pow(city_list_[i].first - city_list_[i+1].first,2) +
-                 pow(city_list_[i].second - city_list_[i+1].second,2));
+   retval += std::hypot(city_list_[i].first - city_list_[i+1].first,
+                      city_list_[i].second - city_list_[i+1].second);
   }
-  retval += sqrt(pow(city_list_[i].first - city_list_[0].first,2) +
-               pow(city_list_[i].second - city_list_[0].second,2));
+  retval += std::hypot(city_list_[i].first - city_list_[0].first,
+                    city_list_[i].second - city_list_[0].second);
   return retval;
 }
 
@@ -64,15 +60,13 @@ std::istream& operator>>(std::istream& is, Cities& cs) {
 
 std::ostream& operator<<(std::ostream &os, Cities& cs) {
   for (auto p : cs.city_list_) {
-    os << p.first << "," << p.second << " ";
+    os << p.first << "	" << p.second << std::endl;
   }
-  // debated putting an end line here. ultimately decided against it.
-  // since the customer might be used to things like putting << std::endl
-  // after everything.
   return os;
 }
 
-//REPLACE WITH STL???
+// don't think next_permutation from the stl is going to help here, especially
+// given the instruction about random numbers
 Cities::permutation_t random_permutation(unsigned len) {
   Cities::permutation_t retval(0);
   Cities::permutation_t temp(0);
@@ -93,3 +87,10 @@ Cities::permutation_t random_permutation(unsigned len) {
   return retval;
 }
 
+Cities::permutation_t identity_permutation(unsigned len) {
+ std::vector<unsigned int> retval(0);
+  for (unsigned i = 0; i < len; i++){
+    retval.push_back(i);
+  }
+  return retval;
+}

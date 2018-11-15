@@ -40,17 +40,24 @@ class Cities {
   friend std::ostream& operator<<(std::ostream &output, Cities& cs);
 
 
-  // Setter. Don't see no need for a getter. If I do at some point, city_list_
-  // is definitely going to get made public since this is just syntactic sugar
-  // for city_list_.push_back(c).
-  void add_to_city_list_(coord_t c);
+  // Setter. Don't see any need for a getter. If I do at some point, city_list_
+  // is definitely going to get made public.
+  void add_to_city_list_(coord_t c) { city_list_.push_back(c);}
+
+  // random_permutation needs to know the length of the city list.
+  int size() {return city_list_.size();}
 
  private:
   // List of city positions. Which is actually a vector. But it feels like a
   // list, and it's the feeling that counts.
   std::vector<coord_t> city_list_;
-  // THIS MIGHT NOT BE REQUIRED
+  // Private method which is called by total_path_distance. Perhaps if I were
+  // feeling snarky I would make this public. But I am not, and so if the
+  // customer wants to call this method, they will have to call
+  // total_path_distance of the identity permutation.
   double own_path_distance();
 };
 
 Cities::permutation_t random_permutation(unsigned len);
+Cities::permutation_t identity_permutation(unsigned len);
+
