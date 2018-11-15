@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     double d = cities.total_path_distance(temp_permut);
     if (d < cur_dist) {
       cities = cities.reorder(temp_permut);
-      cur_dist=d;
+      cur_dist = d;
       std::cout << i << "	" << cur_dist << std::endl;
     }
   }

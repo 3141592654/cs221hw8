@@ -59,7 +59,7 @@ int main() {
   std::cout << std::endl;
   Cities::permutation_t perm2 = random_permutation(10);
   for (int i = 0; i < 10; i++) {
-    std::cout << perm2[i];//static_cast<int>(p);
+    std::cout << perm2[i];
   }
   std::cout << std::endl;
 }

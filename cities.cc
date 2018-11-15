@@ -2,13 +2,13 @@
  * Implementation of cities.hh.
  */
 
-#include <chrono>
-#include <vector>
-#include <iostream>
-#include <random>
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <ctime>
+#include <vector>
+#include <iostream>
+#include <random>
 #include "cities.hh"
 
 Cities Cities::reorder(const Cities::permutation_t& ordering) const {
@@ -28,7 +28,7 @@ double Cities::own_path_distance() {
   double retval = 0;
   uint i;
   for (i = 0; i < city_list_.size()-1; i++) {
-   retval += std::hypot(city_list_[i].first - city_list_[i+1].first,
+    retval += std::hypot(city_list_[i].first - city_list_[i+1].first,
                       city_list_[i].second - city_list_[i+1].second);
   }
   retval += std::hypot(city_list_[i].first - city_list_[0].first,
@@ -43,10 +43,10 @@ double Cities::total_path_distance(const Cities::permutation_t& ordering) const 
 std::istream& operator>>(std::istream& is, Cities& cs) {
   int p1;
   int p2;
-  while(true) {
+  while (true) {
     if (is >> p1) {
       if (is >> p2) {
-        Cities::coord_t newcoord = Cities::coord_t(p1,p2);
+        Cities::coord_t newcoord = Cities::coord_t(p1, p2);
         cs.add_to_city_list_(newcoord);
       } else {
         break;
@@ -70,14 +70,16 @@ std::ostream& operator<<(std::ostream &os, Cities& cs) {
 Cities::permutation_t random_permutation(unsigned len) {
   Cities::permutation_t retval(0);
   Cities::permutation_t temp(0);
-  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  std::default_random_engine gen (seed);
+  std::time_t t;
+  std::time(&t);
+  unsigned seed = t;
+  std::default_random_engine gen(seed);
   for (unsigned i = 0; i <len; i++) {
     temp.push_back(i);
   }
   for (int i = len-1; i > 0; i--) {
     // pop a random element from all possible values and push it onto retval
-    std::uniform_int_distribution<int> dist(0,i);
+    std::uniform_int_distribution<int> dist(0, i);
     int k = dist(gen);
     unsigned int val = temp[k];
     temp.erase(temp.begin()+k);
@@ -88,8 +90,8 @@ Cities::permutation_t random_permutation(unsigned len) {
 }
 
 Cities::permutation_t identity_permutation(unsigned len) {
- std::vector<unsigned int> retval(0);
-  for (unsigned i = 0; i < len; i++){
+  std::vector<unsigned int> retval(0);
+  for (unsigned i = 0; i < len; i++) {
     retval.push_back(i);
   }
   return retval;
