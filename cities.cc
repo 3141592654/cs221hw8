@@ -70,9 +70,7 @@ std::ostream& operator<<(std::ostream &os, Cities& cs) {
 Cities::permutation_t random_permutation(unsigned len) {
   Cities::permutation_t retval(0);
   Cities::permutation_t temp(0);
-  std::time_t t;
-  std::time(&t);
-  unsigned seed = t;
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   std::default_random_engine gen(seed);
   for (unsigned i = 0; i <len; i++) {
     temp.push_back(i);

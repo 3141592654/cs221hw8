@@ -24,6 +24,7 @@ int main(int argc, char** argv) {
   int s = cities.size();
   std::vector<unsigned int> id = identity_permutation(s);
   double cur_dist = cities.total_path_distance(id);
+  std::cout << 0 << "	" << cur_dist << std::endl;
   Cities::permutation_t temp_permut;
   // produce many random permutations and keep the best one
   for (int i = 1; i <= NITER; i++) {
